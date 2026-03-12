@@ -1,0 +1,11 @@
+streamlit
+moviepy
+openai-whisper
+torch
+sentence-transformers
+faiss-cpu
+yt-dlp
+youtube-transcript-api
+groq
+python-dotenv
+numpy
