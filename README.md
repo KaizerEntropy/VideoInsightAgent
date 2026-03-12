@@ -1,3 +1,9 @@
+## 🌐 Live Demo
+
+Try the application here:
+
+https://videoinsightagent.streamlit.app
+
 # 🎥 Video Insight Agent
 
 An AI-powered system that transforms videos into searchable knowledge.
