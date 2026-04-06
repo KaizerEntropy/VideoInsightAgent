@@ -1,43 +1,76 @@
-## 🌐 Live Demo
-
-Try the application here:
-
-https://videoinsightagent.streamlit.app
-
 # 🎥 Video Insight Agent
 
-An AI-powered system that transforms videos into searchable knowledge.
+An AI-powered system that transforms videos into searchable, structured knowledge.
 
-Video Insight Agent allows users to upload videos or provide YouTube links, automatically transcribe the content, generate structured insights, and interact with the video using semantic search and AI question answering.
+🔗 **Live Demo:**  
+https://videoinsightagent.streamlit.app
+
+---
+
+# 🚀 Overview
+
+Video Insight Agent enables users to upload videos or provide YouTube links, automatically transcribe the content, translate non-English videos, generate structured insights, and interact with videos using semantic search and conversational AI.
+
+The system turns raw video content into an **interactive knowledge base**.
+
+---
+
+# ✨ Key Highlights
+
+- 🎨 Modern, clean, and responsive UI for smooth interaction  
+- 🌍 Supports Hindi & Bengali videos via automatic translation to English  
+- ⚡ Faster and smoother processing pipeline  
+- 🧠 Improved AI chatbot with better contextual understanding  
+- 🔎 Semantic search across all videos  
+- 💬 Conversational Q&A with timestamp citations  
 
 ---
 
 # 🚀 Features
 
-### 📹 Multi-Video Processing
+## 📹 Multi-Video Processing
 
 Supports:
+- Single uploaded video  
+- Multiple uploaded videos  
+- Single YouTube video  
+- Multiple YouTube videos  
 
-* Single uploaded video
-* Multiple uploaded videos
-* Single YouTube video
-* Multiple YouTube videos
-
-All videos are processed together and indexed into a unified semantic search system.
+All videos are processed together into a unified semantic search system.
 
 ---
 
-### 🎙 Automatic Transcription
+## 🌍 Multilingual Video Support
 
-Two transcription pipelines are used:
+The system supports:
+- Hindi videos  
+- Bengali videos  
 
-**Uploaded videos**
+Pipeline:
+
+```
+Video → Transcription → Translation → English Processing
+```
+
+---
+
+## 🎨 Enhanced UI/UX
+
+- Clean and modern interface  
+- Better layout and interaction flow  
+- Improved responsiveness  
+
+---
+
+## 🎙 Automatic Transcription
+
+Uploaded videos:
 
 ```
 Video → Audio Extraction → Whisper Transcription
 ```
 
-**YouTube videos**
+YouTube videos:
 
 ```
 YouTube URL → Transcript API
@@ -47,21 +80,28 @@ Each transcript is broken into timestamped segments.
 
 ---
 
-### 🧠 AI Video Understanding
+## 🧠 AI Video Understanding
 
 The system generates:
 
-* AI summaries
-* Study flashcards
-* Timestamped timelines
-* Semantic search results
-* Conversational answers
+- AI summaries  
+- Study flashcards  
+- Timestamped timelines  
+- Semantic search results  
+- Conversational answers  
 
 ---
 
-### ⏱ Timeline Generation
+## ⚡ Improved AI Chatbot
 
-Each processed video receives a structured timeline of important moments.
+- Better understanding of transcript context  
+- More accurate and relevant answers  
+- Improved reasoning using retrieved segments  
+- More efficient learning from video content  
+
+---
+
+## ⏱ Timeline Generation
 
 Example:
 
@@ -75,9 +115,7 @@ Example:
 
 ---
 
-### 🔎 Semantic Timestamp Search
-
-Users can search for concepts inside videos.
+## 🔎 Semantic Timestamp Search
 
 Example:
 
@@ -85,21 +123,19 @@ Example:
 keyboard shortcuts
 ```
 
-The system returns the most relevant timestamp and transcript segment.
+Returns the most relevant timestamp and transcript segment.
 
 ---
 
-### 💬 Conversational Video QA
+## 💬 Conversational Video QA
 
-Users can ask questions like:
+Example:
 
 ```
 What software is demonstrated in the video?
 ```
 
-The AI answers using retrieved transcript segments and provides timestamp citations.
-
-Example:
+Output:
 
 ```
 Answer:
@@ -114,18 +150,14 @@ Uploaded Video 1 — 1:04
 
 # 🧠 System Architecture
 
-The system consists of several stages.
+## 1️⃣ Input Layer
 
-### 1️⃣ Input Layer
-
-The system accepts:
-
-* Uploaded video files
-* YouTube URLs
+- Uploaded video files  
+- YouTube URLs  
 
 ---
 
-### 2️⃣ Transcription Layer
+## 2️⃣ Transcription Layer
 
 Uploaded videos:
 
@@ -139,13 +171,19 @@ YouTube videos:
 YouTube → Transcript API
 ```
 
-Both produce timestamped segments.
+---
+
+## 3️⃣ Translation Layer
+
+```
+Non-English Transcript → Translation → English
+```
 
 ---
 
-### 3️⃣ Transcript Segmentation
+## 4️⃣ Transcript Segmentation
 
-Each transcript becomes segments like:
+Each transcript becomes:
 
 ```
 Video Label | Timestamp | Text
@@ -159,35 +197,32 @@ YouTube Video 1 | 1:24 | The software allows users to insert timestamps while ty
 
 ---
 
-### 4️⃣ Vector Search
+## 5️⃣ Vector Search (FAISS)
 
-All segments are embedded and stored in a vector index.
+- Transcripts are converted into embeddings  
+- Stored in a vector database  
 
-This enables:
-
-* semantic search
-* retrieval-augmented question answering
-
----
-
-### 5️⃣ LLM Processing
-
-The transcript is processed by an LLM to generate:
-
-* summary
-* flashcards
-* timelines
+Enables:
+- Semantic search  
+- Context retrieval  
 
 ---
 
-### 6️⃣ Retrieval-Augmented Generation
+## 6️⃣ LLM Processing
 
-When a user asks a question:
+Generates:
+- Summary  
+- Flashcards  
+- Timelines  
 
-1. Query embedding is created
-2. Relevant transcript segments are retrieved
-3. The LLM receives those segments as context
-4. The answer is generated with timestamp citations
+---
+
+## 7️⃣ Retrieval-Augmented Generation (RAG)
+
+1. Query embedding is created  
+2. Relevant segments are retrieved  
+3. Context is passed to the LLM  
+4. Answer is generated with timestamp citations  
 
 ---
 
@@ -208,8 +243,12 @@ Video_Insight_Agent
 │   ├── timeline_generator.py
 │   ├── vector_store.py
 │   ├── qa_agent.py
+│   ├── translator.py
 │   └── youtube_transcript.py
 │
+├── services
+├── ui
+├── assets
 ├── downloads
 └── tests
 ```
@@ -218,39 +257,29 @@ Video_Insight_Agent
 
 # ⚙️ Installation
 
-Clone the repository:
-
 ```
-git clone https://github.com/YOUR_USERNAME/video-insight-agent.git
+git clone git@github.com:KaizerEntropy/VideoInsightAgent.git
 ```
 
-Move into the project directory:
-
 ```
-cd video-insight-agent
+cd VideoInsightAgent
 ```
-
-Create a virtual environment:
 
 ```
 python -m venv venv
 ```
 
-Activate it.
-
-Linux / macOS
+Linux / macOS:
 
 ```
 source venv/bin/activate
 ```
 
-Windows
+Windows:
 
 ```
-venv\\Scripts\\activate
+venv\Scripts\activate
 ```
-
-Install dependencies:
 
 ```
 pip install -r requirements.txt
@@ -260,8 +289,6 @@ pip install -r requirements.txt
 
 # 🔑 Environment Variables
 
-Create a `.env` file:
-
 ```
 GROQ_API_KEY=your_api_key_here
 ```
@@ -270,13 +297,9 @@ GROQ_API_KEY=your_api_key_here
 
 # ▶ Running the Application
 
-Start the Streamlit server:
-
 ```
 streamlit run app.py
 ```
-
-The interface will open at:
 
 ```
 http://localhost:8501
@@ -286,41 +309,41 @@ http://localhost:8501
 
 # 📊 Example Workflow
 
-1️⃣ Upload one or more videos
-2️⃣ Add optional YouTube URLs
-3️⃣ Click **Process Videos**
-4️⃣ AI generates transcripts, summaries, flashcards, and timelines
-5️⃣ Use **Semantic Search** or **Chat** to interact with the videos
+1. Upload one or more videos  
+2. Add optional YouTube URLs  
+3. Click **Process Videos**  
+4. AI generates transcripts, translations, summaries, flashcards, and timelines  
+5. Use semantic search or chat  
 
 ---
 
 # ⚠ Limitations
 
-* Extremely long transcripts may exceed LLM token limits.
-* Timeline quality depends on transcript accuracy.
-* Real-time streaming video is not currently supported.
+- Extremely long transcripts may exceed LLM token limits  
+- Timeline quality depends on transcription accuracy  
+- Real-time streaming not supported  
 
 ---
 
 # 🧩 Technologies Used
 
-* Python
-* Streamlit
-* Whisper
-* Sentence Transformers
-* FAISS
-* Groq LLM API
-* MoviePy
-* yt-dlp
-* YouTube Transcript API
+- Python  
+- Streamlit  
+- Whisper  
+- Sentence Transformers  
+- FAISS  
+- Groq API  
+- MoviePy  
+- yt-dlp  
+- YouTube Transcript API  
 
 ---
 
 # 👨‍💻 Author
 
-Diptarko Bhattacharjee
-B.E. Computer Science and Engineering
-Jadavpur University, 2024-2028
+Diptarko Bhattacharjee  
+B.E. Computer Science and Engineering  
+Jadavpur University (2024–2028)
 
 ---
 
