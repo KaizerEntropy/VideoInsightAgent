@@ -2,7 +2,7 @@
 from modules.llm import ask_llm
 
 
-MAX_CHUNK_WORDS = 1500
+MAX_CHUNK_WORDS = 1200
 
 
 def chunk_text(text, chunk_size=MAX_CHUNK_WORDS):
@@ -35,11 +35,19 @@ def generate_flashcards(transcript: str) -> str:
     for chunk in chunks:
 
         prompt = f"""
-Create 5 concise flashcards from the following transcript section.
+Create 8 concise, high-quality study flashcards from the following transcript section.
 
 Format:
-Q: question
-A: answer
+Q: question on one line
+A: answer on the next line
+
+Rules:
+- Keep each question and answer clearly separate
+- Make the answer directly respond to the question
+- Avoid repeating the same fact across cards
+- Prefer covering different sections, examples, and conclusions from the transcript
+- Use clear English
+- Output only flashcards in the exact format above
 
 Transcript:
 {chunk}
@@ -50,4 +58,3 @@ Transcript:
         all_flashcards.append(result)
 
     return "\n\n".join(all_flashcards)
-
