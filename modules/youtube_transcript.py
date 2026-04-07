@@ -1,6 +1,8 @@
 import re
 from youtube_transcript_api import YouTubeTranscriptApi
 
+from modules.cache import build_cache_key, load_json_cache, save_json_cache
+from modules.errors import ExternalServiceError, ProcessingError
 from modules.translator import (
     SUPPORTED_TRANSLATION_LANGUAGES,
     is_supported_non_english,
@@ -26,34 +28,49 @@ def extract_video_id(url: str):
         if match:
             return match.group(1)
 
-    raise ValueError("Invalid YouTube URL")
+    raise ProcessingError("Invalid YouTube URL.")
 
 
 def fetch_youtube_transcript(url: str):
     """
     Fetch transcript and timestamps from YouTube
     """
-
     video_id = extract_video_id(url)
+    cache_key = build_cache_key("youtube_transcript", video_id)
+    cached_transcript = load_json_cache("youtube_transcript", cache_key)
 
-    api = YouTubeTranscriptApi()
-    transcript_list = api.list(video_id)
+    if cached_transcript:
+        return (
+            cached_transcript["transcript_text"],
+            cached_transcript["segments"],
+            cached_transcript["metadata"],
+        )
 
-    preferred_languages = ["en", "hi", "bn"]
-    transcript = transcript_list.find_transcript(preferred_languages)
-    source_language = normalize_language_code(transcript.language_code)
-    translated = False
+    try:
+        api = YouTubeTranscriptApi()
+        transcript_list = api.list(video_id)
 
-    if is_supported_non_english(source_language):
-        translation_languages = {
-            item["language_code"] for item in transcript.translation_languages
-        }
+        preferred_languages = ["en", "hi", "bn"]
+        transcript = transcript_list.find_transcript(preferred_languages)
+        source_language = normalize_language_code(transcript.language_code)
+        translated = False
 
-        if "en" in translation_languages:
-            transcript = transcript.translate("en")
-            translated = True
+        if is_supported_non_english(source_language):
+            translation_languages = {
+                item["language_code"] for item in transcript.translation_languages
+            }
 
-    fetched_transcript = transcript.fetch()
+            if "en" in translation_languages:
+                transcript = transcript.translate("en")
+                translated = True
+
+        fetched_transcript = transcript.fetch()
+    except ProcessingError:
+        raise
+    except Exception as exc:
+        raise ExternalServiceError(
+            f"Unable to fetch YouTube transcript for video '{video_id}': {exc}"
+        ) from exc
 
     full_text = []
     segments = []
@@ -85,5 +102,15 @@ def fetch_youtube_transcript(url: str):
         ),
         "translated_to_english": translated,
     }
+
+    save_json_cache(
+        "youtube_transcript",
+        cache_key,
+        {
+            "transcript_text": transcript_text,
+            "segments": segments,
+            "metadata": metadata,
+        },
+    )
 
     return transcript_text, segments, metadata

@@ -28,6 +28,9 @@ def summarize_transcript(transcript: str) -> str:
     using chunk-based summarization.
     """
 
+    if not transcript or not transcript.strip():
+        return "No transcript was available to summarize."
+
     chunks = chunk_text(transcript)
 
     partial_summaries = []
@@ -55,4 +58,3 @@ Combine these summaries into a single clear summary:
     final_summary = ask_llm(final_prompt)
 
     return final_summary
-

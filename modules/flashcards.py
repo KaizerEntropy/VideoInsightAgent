@@ -28,6 +28,9 @@ def generate_flashcards(transcript: str) -> str:
     chunked processing.
     """
 
+    if not transcript or not transcript.strip():
+        return "No transcript was available to generate flashcards."
+
     chunks = chunk_text(transcript)
 
     all_flashcards = []

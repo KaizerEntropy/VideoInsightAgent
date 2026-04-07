@@ -27,6 +27,9 @@ def answer_question(question: str, chunks: list[str]) -> str:
     Limits context size to avoid token overflow.
     """
 
+    if not chunks:
+        return "I could not find relevant transcript context to answer that question."
+
     context = build_context(chunks)
 
     prompt = f"""

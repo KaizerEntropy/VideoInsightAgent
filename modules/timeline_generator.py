@@ -43,6 +43,9 @@ def generate_timeline(transcript: str, segments: list[dict] | None = None) -> st
     MM:SS - description
     """
 
+    if not transcript or not transcript.strip():
+        return "Timeline unavailable because no transcript was produced."
+
     timestamped_context = build_timeline_context(segments or [])
     context = timestamped_context or transcript[:4000]
 

@@ -48,7 +48,13 @@ if process_button:
         for key, value in processed_data.items():
             st.session_state[key] = value
 
-        st.success("Processing complete")
+        if st.session_state.errors:
+            st.warning("\n".join(st.session_state.errors))
+
+        if st.session_state.transcript:
+            st.success("Processing complete")
+        else:
+            st.error("Processing failed for all provided sources.")
 
 
 if st.session_state.transcript:

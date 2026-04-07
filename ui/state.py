@@ -12,6 +12,7 @@ DEFAULT_SESSION_STATE = {
     "source_labels": [],
     "source_details": [],
     "last_search_result": "",
+    "errors": [],
     "youtube_link_count": 1,
     "video_input_count": 1,
 }
